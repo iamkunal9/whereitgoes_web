@@ -8,7 +8,6 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Nops" });
   }
   try {
-    console.log(url)
     var json = await whereitgoes.getredirect(url);
     res.status(200).json({ json }); // Sending the final URL in the response
   } catch (error) {

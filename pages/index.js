@@ -1,14 +1,19 @@
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { useState } from 'react';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const inter = Inter({ subsets: ['latin'] })
 var ddd = null;
 export default function Home() {
   const [data, setData] = useState(null)
   const [domain, setDomain] = useState(null)
+  const [isLoading, setIsLoading] = useState(false);
   
   async function fetchData() {
+    if(!isLoading){
+
+    
+    setIsLoading(true)
     try {
       const response = await fetch(`/api/hello?url=${domain}`);
       if (!response.ok) {
@@ -20,6 +25,8 @@ export default function Home() {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+    setIsLoading(false)
+  }
   }
 
   return (
@@ -41,6 +48,9 @@ export default function Home() {
         >
           Submit
         </button>
+        {isLoading ? (
+        <LoadingSpinner />
+      ) :null}
         {data && data.length > 0 ? <ul>
           <div className='flex justify-between'>
 
